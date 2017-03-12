@@ -1,1 +1,4 @@
-console.log('Start server!');
+import {Server} from "./app"
+(async() => {
+    const server = new Server().start();
+})();

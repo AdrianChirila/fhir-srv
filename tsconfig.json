@@ -3,7 +3,8 @@
     "module": "commonjs",
     "target": "es6",
     "outDir": "./build",
-    "noImplicitAny" : true
+    "noImplicitAny" : true,
+    "sourceMap": true
   },
   "compileOnSave": true,
   "exclude": [
