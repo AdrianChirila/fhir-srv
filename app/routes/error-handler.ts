@@ -4,7 +4,6 @@ export function errorHandler() {
         try {
             console.log('Request to server::', ctx.request.url);
             await next();
-            console.log('ctx', ctx);
             // Handle 404 upstream.
             var status = ctx.status || 404;
             if (status === 404)

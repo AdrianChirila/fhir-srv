@@ -1,0 +1,7 @@
+{
+  "type": "Practitioner",
+  "resources": [{
+    "pid": "cnp",
+    "password": "cnp"
+  }]
+}

@@ -1,34 +1,29 @@
 import * as Koa from "koa";
-import {ApiRouter} from "./routes/index";
+import {ApiRouter, PublicRouter} from "./routes/index";
 import {errorHandler} from "./routes/error-handler";
-
-const Router = require('koa-router');
+import {APP_ROUTES} from "./routes/routes";
+import {importResource} from "./imports/index";
+import {connectToDatabase, dbConnectionDefaultURL} from "./utils/mongoose";
+var Router: any = require('koa-router');
+const convert: any = require('koa-convert');
+// const Router = require('koa-router');
 const cors = require('koa-cors');
 const bodyparser: any = require('koa-bodyparser');
-
-export  class Server {
+const practitioners: any = require('../../resources/default.practitioners.json').resources;
+export class Server {
     app: any;
     port: number;
 
     constructor() {
-        // logger.info('Start creating KOA Server');
-
         this.app = new Koa();
         this.port = 3000;
-        // this.port = getConfig().port;
-
         this.configMiddlewares();
         this.configRoutes();
     }
 
     private configMiddlewares() {
-        // logger.info('Config Middlewares');
-
-        this.logRequestTime();
-
-        // TODO: Change uploads from config
         this.app.use(bodyparser());
-        this.app.use(cors());
+        this.app.use(convert(cors()));
         this.app.use(errorHandler());
     }
 
@@ -39,14 +34,22 @@ export  class Server {
             // logger.info(`${ctx.method} ${ctx.url} - ${+new Date() - start}ms`);
         });
     }
-
     private configRoutes() {
-        let apiRouter = new ApiRouter({prefix: '/api'});
-        this.app.use(apiRouter.routes())
-            .use(apiRouter.allowedMethods());
+        let publicRouter: PublicRouter = new PublicRouter({prefix: '/public'});
+        this.app.use(publicRouter.routes())
+            .use(publicRouter.allowedMethods());
+
+        let apiRouter: ApiRouter = new ApiRouter({prefix: '/api'});
+        this.app.use(apiRouter.routes(), null)
+            .use(apiRouter.allowedMethods(), null);
     }
 
+    async importData() {
+        await importResource(practitioners);
+    }
     async start() {
+        await connectToDatabase(dbConnectionDefaultURL);
+        await this.importData();
         await this.app.listen(this.port);
         console.log(`Server started on port: ${this.port}`);
     }
