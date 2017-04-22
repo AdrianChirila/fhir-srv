@@ -9,7 +9,8 @@ const convert: any = require('koa-convert');
 // const Router = require('koa-router');
 const cors = require('koa-cors');
 const bodyparser: any = require('koa-bodyparser');
-const practitioners: any = require('../../resources/default.practitioners.json').resources;
+const practitioners: any = require('../../resources/default.practitioners.json');
+const patients: any = require('../../resources/patient-mock.json');
 export class Server {
     app: any;
     port: number;
@@ -46,6 +47,7 @@ export class Server {
 
     async importData() {
         await importResource(practitioners);
+        await importResource(patients);
     }
     async start() {
         await connectToDatabase(dbConnectionDefaultURL);

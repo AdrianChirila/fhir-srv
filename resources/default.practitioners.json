@@ -1,6 +1,7 @@
 {
-  "type": "Practitioner",
+  "type": "User",
   "resources": [{
+    "id": "1",
     "pid": "cnp",
     "password": "cnp"
   }]

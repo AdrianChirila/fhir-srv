@@ -1,0 +1,19 @@
+{
+  "type": "Patient",
+  "resources": [
+    {
+      "id": "1",
+      "name": {
+        "family": "Popescu",
+        "given": "Andrei"
+      }
+    },
+    {
+      "id": "2",
+      "name": {
+        "family": "Popescu",
+        "given": "Florin"
+      }
+    }
+  ]
+}
