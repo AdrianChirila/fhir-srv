@@ -1,5 +1,7 @@
 export const MODELS = {
-    USER: 'User'
+    USER: 'User',
+    PATIENT: 'Patient',
+    APPOINTMENT: 'Appointment'
 }
 
 

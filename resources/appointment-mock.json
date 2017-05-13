@@ -1,0 +1,8 @@
+{
+  "type": "Appointment",
+  "resources": [{
+    "id": "1",
+    "pid": "cnp",
+    "password": "cnp"
+  }]
+}

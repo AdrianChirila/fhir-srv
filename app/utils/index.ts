@@ -3,11 +3,6 @@ export function getLogger(tag: string) {
         console.log(`${tag} - ${msg}`);
     }
 }
-
-export const jwtConfig = {
-    secret: 'my-secret'
-};
-
 const timingLog = getLogger('timing logger');
 
 // export const timingLogger = async(ctx: any, next: any) => {

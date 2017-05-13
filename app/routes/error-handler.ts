@@ -1,4 +1,5 @@
 import {IRouterContext} from "koa-router";
+import {log} from "util";
 export function errorHandler() {
     return async(ctx: IRouterContext, next: any) => {
         try {
@@ -9,7 +10,13 @@ export function errorHandler() {
             if (status === 404)
                 ctx.throw(404);
         } catch (error) {
-            console.log('Error::', error);
+            if (error.message) {
+                console.log('Error:', error.message);
+                if (error.message = 'invalid token') {
+                    ctx.status  = 401;
+                    ctx.message = 'invalid token!'
+                }
+            }
         }
     }
 }

@@ -1,30 +1,20 @@
 import {
     OK, NOT_FOUND, LAST_MODIFIED, NOT_MODIFIED, BAD_REQUEST, ETAG,
-    CONFLICT, METHOD_NOT_ALLOWED, NO_CONTENT, CREATED, setIssueRes, jwtConfig
+    CONFLICT, METHOD_NOT_ALLOWED, NO_CONTENT, CREATED
 } from '../utils';
 import {UserModel as User} from "../models"
 import Router = require('koa-router')
 import {getLogger} from '../utils';
-import * as jwt from "jsonwebtoken"
+import {createToken} from "../utils/auth";
 const log = getLogger('auth');
 
-function createToken(user: any) {
-    log(`create token for ${user.username}`);
-    return jwt.sign({username: user.pid, _id: user._id}, jwtConfig.secret, { expiresIn: 60*60*60 });
-}
 
-export function decodeToken(token: any) {
-    let decoded = jwt.decode(token, jwtConfig.secret);
-    log(`decoded token for ${decoded}`);
-    return decoded;
-}
 
 export class AuthRouter extends Router {
     constructor(args: any) {
         super(args);
         this.post('/session', async(ctx: any) => {
             let reqBody = ctx.request.body;
-            console.log("Body::", reqBody, ctx.request.headers);
             if (!reqBody.pid || !reqBody.password) {
                 log(`session - missing username and password`);
                 ctx.body = {message: 'Missing username and password'};
@@ -39,7 +29,7 @@ export class AuthRouter extends Router {
                 log(`session - token created`);
             } else {
                 log(`session - wrong password`);
-                setIssueRes(ctx.response, BAD_REQUEST, [{error: 'Wrong password'}])
+                // setIssueRes(ctx.response, BAD_REQUEST, [{error: 'Wrong password'}])
             }
         })
     }
