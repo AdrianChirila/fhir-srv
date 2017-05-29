@@ -1,11 +1,10 @@
 import * as Koa from "koa";
 import {ApiRouter, PublicRouter} from "./routes/index";
 import {errorHandler} from "./routes/error-handler";
-import {APP_ROUTES} from "./routes/routes";
 import {importResource} from "./imports/index";
 import {connectToDatabase, dbConnectionDefaultURL} from "./utils/mongoose";
 import {createAppointments} from "./imports/import.resource";
-import {verifyToken, secure} from "./utils/auth";
+import {secure} from "./utils/auth";
 var Router: any = require('koa-router');
 const convert: any = require('koa-convert');
 // const Router = require('koa-router');
@@ -13,6 +12,7 @@ const cors = require('koa-cors');
 const bodyparser: any = require('koa-bodyparser');
 const practitioners: any = require('../../resources/default.practitioners.json');
 const patients: any = require('../../resources/patient-mock.json');
+const users: any = require('../../resources/user-mock.json');
 export class Server {
     app: any;
     port: number;
@@ -52,6 +52,7 @@ export class Server {
     async importData() {
         await importResource(practitioners);
         await importResource(patients);
+        await importResource(users);
         await createAppointments();
     }
     async start() {

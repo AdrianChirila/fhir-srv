@@ -1,9 +1,11 @@
 import * as jwt from "jsonwebtoken"
 import {getLogger} from "./index";
+import {UserModel} from "../models/user.model";
 const log = getLogger('auth');
 const jwtConfig = {
     secret: 'my-secret'
 };
+
 
 export function createToken(user: any) {
     log(`create token for ${user.username}`);
@@ -16,23 +18,27 @@ export function decodeToken(token: any) {
     return decoded;
 }
 
-export function verifyToken(ctx: any) {
-    console.log('Verify token:::', ctx.request.headers.authorization);
-    let data: any = jwt.verify(ctx.request.headers.authorization, jwtConfig.secret);
-    console.log('TOken valid!', data);
+export async function verifyToken(ctx: any) {
+    return jwt.verify(ctx.request.headers.authorization, jwtConfig.secret);
+
+}
+
+async function ensureDateInState(ctx: any, data: any) {
     ctx.state.username = data.username;
     ctx.state._id = data._id;
+    //check if user is Practitioner or Patient.
+    let targetUser: any = await UserModel.findById(data._id);
+    console.log('User id:', targetUser._id);
+    if (targetUser.activity.actor.practitioner)
+        ctx.state.practitioner = targetUser.activity.actor.practitioner;
+    else
+        ctx.state.patient = targetUser.activity.actor.patient;
 }
-/*
- (ctx: any, next: any) => {
- console.log('Ver token!', ctx.request.headers);
- verifyToken(ctx.request.headers.authorization)
- return next();
- }
- */
+
 export function secure() {
-    return (ctx: any, next: any) => {
-        let decodeData: any = verifyToken(ctx);
+    return async(ctx: any, next: any) => {
+        let data: any = await verifyToken(ctx);
+        await ensureDateInState(ctx, data);
         return next();
     }
 }

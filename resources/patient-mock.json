@@ -6,35 +6,40 @@
       "name": {
         "family": "Popescu",
         "given": "Andrei"
-      }
+      },
+      "generalPractitioner": "1"
     },
     {
       "id": "2",
       "name": {
         "family": "Popescu",
         "given": "Florin"
-      }
+      },
+      "generalPractitioner": "1"
     },
     {
       "id": "3",
       "name": {
         "family": "Gaby",
         "given": "Ardelean"
-      }
+      },
+      "generalPractitioner": "1"
     },
     {
       "id": "4",
       "name": {
         "family": "Ilies",
         "given": "Nastase"
-      }
+      },
+      "generalPractitioner": "2"
     },
     {
       "id": "5",
       "name": {
         "family": "FLorin",
         "given": "Marinescu"
-      }
+      },
+      "generalPractitioner": "2"
     }
   ]
 }

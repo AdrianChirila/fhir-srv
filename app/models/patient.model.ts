@@ -1,3 +1,4 @@
+import {MODELS} from "./models";
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const patientSchema = new Schema({
@@ -14,15 +15,10 @@ const patientSchema = new Schema({
             type: String,
             required: true
         }
+    },
+    generalPractitioner: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: MODELS.PRACTITIONER
     }
-    // birthDate: {
-    //     type: Date,
-    //     required: true
-    // },
-    // address: {
-    //     type: String,
-    //     required: true
-    // }
 });
 export const PatientModel = mongoose.model('Patient', patientSchema);
-// module.exports = mongoose.model('User', userSchema);

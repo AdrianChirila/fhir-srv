@@ -1,7 +1,15 @@
 export const MODELS = {
-    USER: 'User',
     PATIENT: 'Patient',
-    APPOINTMENT: 'Appointment'
-}
+    APPOINTMENT: 'Appointment',
+    PRACTITIONER: 'Practitioner',
+    USER: 'User',
+    SLOT: 'Slot',
+    SCHEDULE: 'Schedule'
+};
+
+export const ROLES = {
+    PRACTITIONER: 'practitioner',
+    PATIENT: 'patient'
+};
 
 

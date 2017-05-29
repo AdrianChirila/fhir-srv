@@ -25,7 +25,7 @@ export class AuthRouter extends Router {
 
             if (dbUser && dbUser.password === reqBody.password) {
                 ctx.status = CREATED;
-                ctx.response.body = {token: createToken(dbUser)};
+                ctx.response.body = {role: dbUser.role, token: createToken(dbUser)};
                 log(`session - token created`);
             } else {
                 log(`session - wrong password`);

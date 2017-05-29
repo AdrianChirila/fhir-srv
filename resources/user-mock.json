@@ -1,0 +1,26 @@
+{
+  "type": "User",
+  "resources": [
+    {
+      "id": "1",
+      "pid": "medic1",
+      "password": "cnp1",
+      "role": "practitioner",
+      "individual": "1"
+    },
+    {
+      "id": "2",
+      "pid": "medic2",
+      "password": "cnp2",
+      "role": "practitioner",
+      "individual": "2"
+    },
+    {
+      "id": "3",
+      "pid": "pacient1",
+      "password": "cnp1",
+      "role": "patient",
+      "individual": "1"
+    }
+  ]
+}
