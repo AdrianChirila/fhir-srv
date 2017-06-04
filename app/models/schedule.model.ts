@@ -19,7 +19,7 @@ const scheduleSChema = new Schema({
         type: Boolean,
         required: true
     },
-    actor: actorSubSchema
+    actor: actorSubSchema,
 });
 export const ScheduleModel = mongoose.model(MODELS.SCHEDULE, scheduleSChema);
 // module.exports = mongoose.model('User', userSchema);

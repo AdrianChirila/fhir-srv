@@ -5,6 +5,7 @@ import {importResource} from "./imports/index";
 import {connectToDatabase, dbConnectionDefaultURL} from "./utils/mongoose";
 import {createAppointments} from "./imports/import.resource";
 import {secure} from "./utils/auth";
+import {ensureDataForBooking} from "./utils/ensure.booking.data";
 var Router: any = require('koa-router');
 const convert: any = require('koa-convert');
 // const Router = require('koa-router');
@@ -54,6 +55,7 @@ export class Server {
         await importResource(patients);
         await importResource(users);
         await createAppointments();
+        await ensureDataForBooking();
     }
     async start() {
         await connectToDatabase(dbConnectionDefaultURL);

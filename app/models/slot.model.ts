@@ -15,6 +15,10 @@ const slotSchema = new Schema({
         type: Date,
         required: true
     },
+    schedule: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: MODELS.SCHEDULE
+    }
 });
 export const SlotModel = mongoose.model(MODELS.SLOT, slotSchema);
 // module.exports = mongoose.model('User', userSchema);

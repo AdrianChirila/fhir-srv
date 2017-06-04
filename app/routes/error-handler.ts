@@ -11,11 +11,13 @@ export function errorHandler() {
                 ctx.throw(404);
         } catch (error) {
             if (error.message) {
-                console.log('Error:', error.message);
+                console.log('Error:', error);
                 if (error.message = 'invalid token') {
                     ctx.status  = 401;
                     ctx.message = 'invalid token!'
+                    return
                 }
+                ctx.body = error;
             }
         }
     }

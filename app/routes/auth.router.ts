@@ -6,6 +6,7 @@ import {UserModel as User} from "../models"
 import Router = require('koa-router')
 import {getLogger} from '../utils';
 import {createToken} from "../utils/auth";
+import {PatientModel as Patient} from "../models/patient.model";
 const log = getLogger('auth');
 
 
@@ -14,6 +15,7 @@ export class AuthRouter extends Router {
     constructor(args: any) {
         super(args);
         this.post('/session', async(ctx: any) => {
+            console.log('xxx', ctx.state);
             let reqBody = ctx.request.body;
             if (!reqBody.pid || !reqBody.password) {
                 log(`session - missing username and password`);
@@ -26,6 +28,10 @@ export class AuthRouter extends Router {
             if (dbUser && dbUser.password === reqBody.password) {
                 ctx.status = CREATED;
                 ctx.response.body = {role: dbUser.role, token: createToken(dbUser)};
+                if (dbUser.activity.actor.patient) {
+                    let dbPatient: any = await Patient.findById(dbUser.activity.actor.patient);
+                    ctx.response.body.generalPractitioner = dbPatient.generalPractitioner;
+                }
                 log(`session - token created`);
             } else {
                 log(`session - wrong password`);

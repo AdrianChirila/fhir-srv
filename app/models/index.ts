@@ -4,3 +4,4 @@ export {MODELS} from './models';
 export {AppointmentModel} from './appointment.model';
 export {UserModel} from './user.model';
 export {SlotModel} from "./slot.model"
+export {ScheduleModel} from "./schedule.model"
