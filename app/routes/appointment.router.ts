@@ -11,6 +11,7 @@ export class AppointmentRouter extends KoaRouter {
     constructor(args: any) {
         super(args);
         this.get('/', async(ctx: any) => {
+            console.log('Get appointment:::', ctx.state);
             let relevantUser: any = await UserModel.findById(ctx.state._id);
             if (!ctx.query.status) {
                 ctx.query.status = APPOINTMENT_STATUS.BOOKED;
@@ -21,10 +22,21 @@ export class AppointmentRouter extends KoaRouter {
                     'status': ctx.query.status
                 });
             } else {
-                ctx.body = await AppointmentModel.find({
-                    'participant.actor.patient': relevantUser.activity.actor.patient,
-                    'status': ctx.query.status
-                });
+                let query: any = {
+                    'participant.actor.patient': relevantUser.activity.actor.patient
+                };
+
+                if (ctx.query['status'].lastIndexOf('||') > -1) {
+                    console.log('|| in status', ctx.query['status']);
+                    let firstStatus: string = ctx.query['status'].split('||')[0];
+                    let secondStatus: string = ctx.query['status'].split('||')[1];
+                    query['$and'] = [
+                        {$or: [{status: firstStatus}, {status: secondStatus}]}
+                    ]
+                } else {
+                    query['status'] = ctx.query.status;
+                }
+                ctx.body = await AppointmentModel.find(query);
             }
 
             ctx.status = 200;
@@ -63,3 +75,13 @@ export class AppointmentRouter extends KoaRouter {
         });
     }
 }
+
+
+
+
+
+
+
+
+
+

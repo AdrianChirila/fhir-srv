@@ -24,7 +24,6 @@ export class Server {
         this.configMiddlewares();
         this.configRoutes();
     }
-
     private configMiddlewares() {
         this.app.use(bodyparser());
         this.app.use(convert(cors()));
@@ -59,6 +58,14 @@ export class Server {
     }
     async start() {
         await connectToDatabase(dbConnectionDefaultURL);
+        console.log('Start!');
+        await Promise.all([
+            (resolve: any, reject: any)=>console.log('2'),
+            (resolve: any, reject: any)=>console.log('3'),
+            (resolve: any, reject: any)=>console.log('4'),
+            (resolve: any, reject: any)=>console.log('5'),
+        ]).then(()=>console.log('Finish'));
+        console.log('End!');
         await this.importData();
         await this.app.listen(this.port);
         console.log(`Server started on port: ${this.port}`);

@@ -14,6 +14,7 @@ export class SlotRouter extends KoaRouter {
             ctx.body = scheduleFreeSlots;
         });
         this.post('/', async(ctx: any) => {
+            console.log('xxxxxxxxxxx');
             //for the moment only one slot per schedule of practitioners
             if (ctx.state.practitioner) {
                 console.log('xxx', ctx.request.body.start);

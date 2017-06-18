@@ -1,4 +1,5 @@
 import {MODELS} from "./models";
+import {contactPointSubShema, addressSubSchema} from "./patient.model";
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const practitionerSchema = new Schema({
@@ -10,7 +11,9 @@ const practitionerSchema = new Schema({
     password: {
         type: String,
         required: true
-    }
+    },
+    telecom: [contactPointSubShema],
+    address: [addressSubSchema]
 });
 export const PractitionerModel = mongoose.model(MODELS.PRACTITIONER, practitionerSchema);
 // module.exports = mongoose.model('User', userSchema);

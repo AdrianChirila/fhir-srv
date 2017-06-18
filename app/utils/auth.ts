@@ -20,10 +20,10 @@ export function decodeToken(token: any) {
 
 export async function verifyToken(ctx: any) {
     return jwt.verify(ctx.request.headers.authorization, jwtConfig.secret);
-
 }
 
 async function ensureDateInState(ctx: any, data: any) {
+    console.log('context::::', data);
     ctx.state.username = data.username;
     ctx.state._id = data._id;
     //check if user is Practitioner or Patient.

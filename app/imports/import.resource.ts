@@ -77,10 +77,10 @@ export async function createAppointments() {
     let date1: any = prepareDate(9,10);
     let date2: any = prepareDate(12,13);
     let date3: any = prepareDate(15,16);
-
     if (dbAppointments.length == 0) {
         await Promise.all([
-            new Appointment({
+            new Appointment(
+                {
                 date: new Date(Date.now()),
                 status: APPOINTMENT_STATUS.BOOKED,
                 start: date1.start,
@@ -100,7 +100,8 @@ export async function createAppointments() {
                     }
                 ]
             }).save(),
-            new Appointment({
+            new Appointment(
+                {
                 date: new Date(Date.now()),
                 status: APPOINTMENT_STATUS.BOOKED,
                 start: date2.start,
@@ -120,27 +121,8 @@ export async function createAppointments() {
                     }
                 ]
             }).save(),
-            new Appointment({
-                date: new Date(Date.now()),
-                status: APPOINTMENT_STATUS.PENDING,
-                start: date3.start,
-                end: date3.end,
-                participant: [
-                    {
-                        actor: {
-                            display: `${thirdPatient.name.family} ${thirdPatient.name.given}`,
-                            patient: thirdPatient._id
-                        }
-                    },
-                    {
-                        actor: {
-                            display: 'Default practitioner',
-                            practitioner: defaultPractitioner._id
-                        }
-                    }
-                ]
-            }).save(),
-            new Appointment({
+            new Appointment(
+                {
                 date: new Date(Date.now()),
                 status: APPOINTMENT_STATUS.BOOKED,
                 start: date3.start,
