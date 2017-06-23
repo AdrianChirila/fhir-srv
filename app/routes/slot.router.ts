@@ -6,15 +6,17 @@ export class SlotRouter extends KoaRouter {
     constructor(args: any) {
         super(args);
         this.get('/', async(ctx: any) => {
-            console.log('SLot:::', ctx.state);
-            let practitionerSchedule: any = await Schedule.findOne({'actor.practitioner': ctx.query.generalPractitioner});
-            let scheduleFreeSlots: any = await Slot.find({'schedule': practitionerSchedule._id});
-            console.log('Practitioner schedule::', practitionerSchedule);
+            console.log('Query:::', ctx.query);
+            let scheduleFreeSlots: any = await Slot.find(
+                {
+                    'schedule': ctx.query.schedule,
+                    'status': 'free'
+                }
+            );
             ctx.status = 200;
             ctx.body = scheduleFreeSlots;
         });
         this.post('/', async(ctx: any) => {
-            console.log('xxxxxxxxxxx');
             //for the moment only one slot per schedule of practitioners
             if (ctx.state.practitioner) {
                 console.log('xxx', ctx.request.body.start);

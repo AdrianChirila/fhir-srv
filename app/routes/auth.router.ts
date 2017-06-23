@@ -15,7 +15,6 @@ export class AuthRouter extends Router {
     constructor(args: any) {
         super(args);
         this.post('/session', async(ctx: any) => {
-            console.log('xxx', ctx.state);
             let reqBody = ctx.request.body;
             if (!reqBody.pid || !reqBody.password) {
                 log(`session - missing username and password`);
@@ -23,27 +22,9 @@ export class AuthRouter extends Router {
                 // setIssueRes(ctx.response, BAD_REQUEST, [{error: 'Both username and password must be set'}])
                 return;
             }
-
-
-
-
-
-
             let dbUser = await User.findOne({
                 pid: reqBody.pid, password: reqBody.password
             });
-
-
-
-
-
-
-
-
-
-
-
-
             if (dbUser && dbUser.password === reqBody.password) {
                 ctx.status = CREATED;
                 ctx.response.body = {role: dbUser.role, token: createToken(dbUser)};
@@ -54,6 +35,8 @@ export class AuthRouter extends Router {
                 log(`session - token created`);
             } else {
                 log(`session - wrong password`);
+                ctx.body = {message: "Wrong username or password"};
+                ctx.status = 401;
                 // setIssueRes(ctx.response, BAD_REQUEST, [{error: 'Wrong password'}])
             }
         })

@@ -27,9 +27,6 @@ addressSubSchema.add({
     state: {
         type: String,
     },
-    postalCode: {
-        type: String,
-    },
     county: {
         type: String,
     }
@@ -37,7 +34,6 @@ addressSubSchema.add({
 const patientSchema = new Schema({
     id: {
         type: String,
-        required: true
     },
     name: {
         family: {
@@ -53,8 +49,42 @@ const patientSchema = new Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: MODELS.PRACTITIONER
     },
-    telecom: [contactPointSubShema],
-    address: [addressSubSchema]
+    address: [{
+        type: {
+            type: String,
+        },
+        text: {
+            type: String,
+        },
+        city: {
+            type: String,
+        },
+        district: {
+            type: String,
+        },
+        state: {
+            type: String,
+        },
+        postalCode: {
+            type: String,
+        },
+        county: {
+            type: String,
+        }
+    }],
+    telecom: [{
+        system: {
+            type: String,
+        },
+        value: {
+            type: String
+        }
+    }],
+    // telecom: [contactPointSubShema],
+    // address: [addressSubSchema],
+    cnp: {
+        type: String
+    }
 });
 
 patientSchema.pre('save', function(next: any) {

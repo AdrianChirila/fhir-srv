@@ -2,7 +2,9 @@ import {MODELS} from "./models";
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 let actorSubSchema = new mongoose.Schema(null, {_id: false});
+let periodSubSchema = new mongoose.Schema(null, {_id: false});
 actorSubSchema.add({
+    display: String,
     patient: {
         type: mongoose.Schema.Types.ObjectId,
         ref: MODELS.PATIENT
@@ -13,12 +15,25 @@ actorSubSchema.add({
     }
 });
 
+periodSubSchema.add({
+    start: {
+        type: Date,
+        required: true
+    },
+    end: {
+        type: Date,
+        required: true
+    }
+});
 const scheduleSChema = new Schema({
     id: String,
     active: {
         type: Boolean,
-        required: true
     },
+    comment: {
+        type: String
+    },
+    planningHorizon: periodSubSchema,
     actor: actorSubSchema,
 });
 export const ScheduleModel = mongoose.model(MODELS.SCHEDULE, scheduleSChema);

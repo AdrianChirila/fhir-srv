@@ -14,6 +14,9 @@ activitySubSchema.add({
             type: mongoose.Schema.Types.ObjectId,
             ref: MODELS.PRACTITIONER
         }
+    },
+    text: {
+        type: String
     }
 });
 
