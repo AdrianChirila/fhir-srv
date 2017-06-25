@@ -19,7 +19,7 @@ export class PatientRouter extends KoaRouter {
         this.post('/', async(ctx: any) => {
             console.log('Post patient::', ctx.state);
             let patient: any = ctx.request.body;
-            patient['generalPractitioner'] = ctx.state._id;
+            patient['generalPractitioner'] = ctx.state.practitioner;
             let dbPatient: any = await new PatientModel(ctx.request.body).save();
             await new User({
                 pid: dbPatient['cnp'],

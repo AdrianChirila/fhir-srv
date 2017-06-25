@@ -5,6 +5,7 @@ import {MODELS, ROLES} from "../models/models";
 import {APPOINTMENT_STATUS} from "../utils/consts";
 import {PatientModel} from "../models/patient.model";
 import {PractitionerModel} from "../models/practitioner.model";
+import {SlotModel} from "../models/slot.model";
 const ObjectId = require('mongoose').Schema.Types.ObjectId;
 
 export class AppointmentRouter extends KoaRouter {
@@ -43,7 +44,16 @@ export class AppointmentRouter extends KoaRouter {
         });
         this.put('/:id', async(ctx: any) => {
             console.log('Update appointment');
-            ctx.body = await AppointmentModel.findByIdAndUpdate(ctx.params.id, ctx.request.body, {new: true});
+            let appointment: any = await AppointmentModel.findByIdAndUpdate(ctx.params.id, ctx.request.body, {new: true});
+            let targetSlot: any = appointment.slot;
+            console.log('Apointment::::::::', appointment);
+            if (appointment.status == 'cancelled') {
+                await SlotModel.findByIdAndUpdate(targetSlot, {status: 'free'});
+            } else if (appointment.status == 'booked') {
+                await SlotModel.findByIdAndUpdate(targetSlot, {status: 'busy'});
+            }
+
+            ctx.body = appointment;
             ctx.status = 201;
         });
 
@@ -54,6 +64,7 @@ export class AppointmentRouter extends KoaRouter {
             let targetPractitioner: any = await PractitionerModel.findById(targetPatient.generalPractitioner);
             let body: any = ctx.request.body;
             ctx.body = await AppointmentModel({
+                "slot": body.slot,
                 "date": body.date,
                 "status": APPOINTMENT_STATUS.PENDING,
                 participant: [
@@ -71,6 +82,7 @@ export class AppointmentRouter extends KoaRouter {
                     }
                 ]
             }).save();
+            await SlotModel.findByIdAndUpdate(body.slot, {status: 'pending'});
             ctx.status= 200;
         });
     }

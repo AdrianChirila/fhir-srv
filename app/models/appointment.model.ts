@@ -1,7 +1,7 @@
 import {Schema} from "mongoose";
 const mongoose = require('mongoose');
 import {MODELS} from "./models";
-let participantSubSchema = new mongoose.Schema(null, { _id: false });
+let participantSubSchema = new mongoose.Schema(null, {_id: false});
 participantSubSchema.add({
     actor: {
         display: String,
@@ -18,8 +18,8 @@ participantSubSchema.add({
 const appointmentSchema = new Schema({
     id: String,
     status: {
-      required: true,
-      type: String
+        required: true,
+        type: String
     },
     date: {
         type: Date,
@@ -34,6 +34,10 @@ const appointmentSchema = new Schema({
     },
     end: {
         type: Date
+    },
+    slot: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: MODELS.PRACTITIONER
     }
 });
 export const AppointmentModel = mongoose.model(MODELS.APPOINTMENT, appointmentSchema);

@@ -6,6 +6,7 @@ import {PatientRouter} from "./patient.router";
 import {AppointmentRouter} from "./appointment.router";
 import {SlotRouter} from "./slot.router";
 import {ScheduleRouter} from "./schedule.router";
+import {PractitionerRouter} from "./practitioner.router";
 
 export class ApiRouter extends KoaRouter {
     constructor(args: any) {
@@ -15,6 +16,7 @@ export class ApiRouter extends KoaRouter {
         this.use('/Appointment', new AppointmentRouter(null).routes());
         this.use('/Slot', new SlotRouter(null).routes());
         this.use('/Schedule', new ScheduleRouter(null).routes());
+        this.use('/Practitioner', new PractitionerRouter(null).routes());
     }
 }
 /*
