@@ -31,9 +31,15 @@ export class AppointmentRouter extends KoaRouter {
                     console.log('|| in status', ctx.query['status']);
                     let firstStatus: string = ctx.query['status'].split('||')[0];
                     let secondStatus: string = ctx.query['status'].split('||')[1];
+                    let thirdStatus: string = ctx.query['status'].split('||')[2];
+                    let orQuery: any = [{status: firstStatus}, {status: secondStatus}];
+
+                    if (thirdStatus) {
+                      orQuery.push({status: thirdStatus});
+                    }
                     query['$and'] = [
-                        {$or: [{status: firstStatus}, {status: secondStatus}]}
-                    ]
+                        {$or: orQuery}
+                    ];
                 } else {
                     query['status'] = ctx.query.status;
                 }
