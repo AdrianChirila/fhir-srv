@@ -87,10 +87,20 @@ const patientSchema = new Schema({
     }
 });
 
+
+
+
+
 patientSchema.pre('save', function(next: any) {
     // do stuff
     next();
 });
+
+
+
+
+
+
 
 export const PatientModel = mongoose.model('Patient', patientSchema);
 

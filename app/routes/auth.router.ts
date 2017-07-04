@@ -22,9 +22,24 @@ export class AuthRouter extends Router {
                 // setIssueRes(ctx.response, BAD_REQUEST, [{error: 'Both username and password must be set'}])
                 return;
             }
+
+
+
+
+
+
             let dbUser = await User.findOne({
                 pid: reqBody.pid, password: reqBody.password
             });
+
+
+
+
+
+
+
+
+
             if (dbUser && dbUser.password === reqBody.password) {
                 ctx.status = CREATED;
                 ctx.response.body = {role: dbUser.role, token: createToken(dbUser)};
