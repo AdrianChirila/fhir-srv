@@ -16,29 +16,18 @@ export class AuthRouter extends Router {
         super(args);
         this.post('/session', async(ctx: any) => {
             let reqBody = ctx.request.body;
+            reqBody.password = reqBody.password.trim();
+            reqBody.pid = reqBody.pid.trim();
+            console.log('xxx User:::', reqBody);
             if (!reqBody.pid || !reqBody.password) {
                 log(`session - missing username and password`);
                 ctx.body = {message: 'Missing username and password'};
                 // setIssueRes(ctx.response, BAD_REQUEST, [{error: 'Both username and password must be set'}])
                 return;
             }
-
-
-
-
-
-
             let dbUser = await User.findOne({
                 pid: reqBody.pid, password: reqBody.password
             });
-
-
-
-
-
-
-
-
 
             if (dbUser && dbUser.password === reqBody.password) {
                 ctx.status = CREATED;

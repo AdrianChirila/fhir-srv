@@ -11,11 +11,9 @@ const practitionerSchema = new Schema({
     name: {
         family: {
             type: String,
-            required: true
         },
         given: {
             type: String,
-            required: true
         }
     },
     password: {

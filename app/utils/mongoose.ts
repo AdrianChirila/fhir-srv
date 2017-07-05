@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-export const dbConnectionDefaultURL = `mongodb://localhost:27017/fhir-server-dev`;
+export const dbConnectionDefaultURL = `mongodb://localhost:27017/fhir-server-dev-v2`;
 
 
 export async function connectToDatabase(url: string) {

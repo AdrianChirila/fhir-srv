@@ -1,6 +1,6 @@
 {
     "port": "3000",
     "database": {
-        name: "fhir-srv-dev"
+        "name": "fhir-srv-dev"
     }
 }
